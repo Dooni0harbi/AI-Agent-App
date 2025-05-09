@@ -28,7 +28,7 @@ const Login = () => {
     setLoading(true);
     try {
       await signUpWithGoogle();
-      navigate("/chat"); //direct to chat after sign up
+      navigate("/chat"); //direct to chat after sign in
     } catch (error) {
       toastErrorNotify(error.message);
     } finally {
