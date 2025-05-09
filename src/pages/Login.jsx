@@ -5,8 +5,8 @@ import { toastErrorNotify } from "../helper/ToastNotify";
 import GoogleIcon from "../assets/GoogleIcon";
 
 const Login = () => {
-  const { signIn, signUpProvider } = useAuth();
-  const [email, setEmail] = useState("");
+    const { signIn, signUpWithGoogle } = useAuth();
+    const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Login = () => {
     setLoading(true);
     try {
       await signIn(email, password);
-      navigate("/");
+      navigate("/chat"); //direct to chat after sign in
     } catch (error) {
       toastErrorNotify(error.message);
     } finally {
@@ -27,8 +27,8 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      await signUpProvider();
-      navigate("/");
+      await signUpWithGoogle();
+      navigate("/chat"); //direct to chat after sign up
     } catch (error) {
       toastErrorNotify(error.message);
     } finally {
