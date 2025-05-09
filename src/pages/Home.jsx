@@ -38,7 +38,7 @@ const Home = () => {
          <img 
         src={robot} 
         alt="AI Agent Logo" 
-        className="w-40 h-auto mb-6"  // 👈 w-40 is 160px wide, adjust if needed
+        className="w-40 h-auto mb-6"  
       />
   
         <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-6 text-center">
