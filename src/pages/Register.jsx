@@ -6,7 +6,9 @@ import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
 
 
 const Register = () => {
-  const { createUser, signUpProvider } = useContext(AuthContext);
+//   const { createUser, signUpProvider } = useContext(AuthContext);
+
+  const { signUpWithGoogle } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -85,7 +87,7 @@ const Register = () => {
 
           <button
             type="button"
-            onClick={() => signUpProvider()}
+            onClick={() => signUpWithGoogle()}
             className="w-full flex items-center justify-center py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-cyan-500"
           >
             Continue with Google
