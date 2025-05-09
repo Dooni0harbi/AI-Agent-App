@@ -1,17 +1,14 @@
-
-// src/App.jsx
 import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { AuthContextProvider } from "./context/AuthContext";
+import { AuthContextProvider, useAuth } from "./context/AuthContext";
 import { AppContextProvider } from "./context/AppContext";
-import { AudioProvider } from "./context/AudioContext"; // Import AudioProvider
+import { AudioProvider } from "./context/AudioContext";
 import AppRouter from "./router/AppRouter";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import TopNavBar from "./components/navbar/TopNavBar.jsx";
 import { OpenAIProvider, useOpenAI } from "./services/openai"; 
 
-// OpenAIInitializer definition remains the same
 function OpenAIInitializer() {
   const { initialize } = useOpenAI();
   useEffect(() => {
@@ -20,8 +17,32 @@ function OpenAIInitializer() {
       initialize(storedApiKey);
     }
   }, []);
-
   return null;
+}
+
+// Move AppShell out so it can use useAuth
+function AppShell() {
+  const { currentUser } = useAuth();
+
+  return (
+    <BrowserRouter>
+      {currentUser && <TopNavBar />}
+      <AppRouter />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeButton={true}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        closeOnClick
+        toastClassName="bg-gray-800 text-white text-sm rounded-lg shadow-lg"
+        bodyClassName="text-lg font-medium"
+        progressClassName="bg-blue-500"
+      />
+    </BrowserRouter>
+  );
 }
 
 function App() {
@@ -29,26 +50,10 @@ function App() {
     <div className="dark:bg-gray-dark-main">
       <AuthContextProvider>
         <AppContextProvider>
-          <AudioProvider> {/* Wrap your app in the AudioProvider */}
+          <AudioProvider>
             <OpenAIProvider>
               <OpenAIInitializer />
-              <BrowserRouter>
-                <TopNavBar />
-                <AppRouter />
-                <ToastContainer
-                  position="top-right"
-                  autoClose={3000}
-                  hideProgressBar={false}
-                  newestOnTop={true}
-                  closeButton={true}
-                  rtl={false}
-                  pauseOnFocusLoss={false}
-                  closeOnClick
-                  toastClassName="bg-gray-800 text-white text-sm rounded-lg shadow-lg"
-                  bodyClassName="text-lg font-medium"
-                  progressClassName="bg-blue-500"
-                />
-              </BrowserRouter>
+              <AppShell />
             </OpenAIProvider>
           </AudioProvider>
         </AppContextProvider>
